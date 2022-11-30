@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   StyleSheet,
   View,
@@ -9,17 +9,45 @@ import {
   Alert,
   TextInput,
   Modal,
-  TouchableHighlight
+  TouchableHighlight,
+  Button
 } from "react-native";
 import { NavigationContainer } from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Camera, CameraType } from 'expo-camera';
+
 
 export default function App() {
   const Stack = createNativeStackNavigator();
   const Tab = createBottomTabNavigator();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  const [type, setType] = useState(CameraType.back);
+  const [permission, requestPermission] = Camera.useCameraPermissions();
+  const cameraRef = useRef();
+
+  function toggleCameraType() {
+    setType(current => (current === CameraType.back ? CameraType.front : CameraType.back));
+  }
+
+  if (!permission) {
+    // Camera permissions are still loading
+    return <View />;
+  }
+
+  if (!permission.granted) {
+    // Camera permissions are not granted yet
+    return (
+      <View style={styles.container}>
+        <Text style={{ textAlign: 'center' }}>We need your permission to show the camera</Text>
+        <Button onPress={requestPermission} title="grant permission" />
+      </View>
+    );
+  }
+
+
 
   Login = ({navigation}) => {
     return(
@@ -71,10 +99,29 @@ export default function App() {
     );
   }
 
+  takePic = async () => {
+    if(!cameraRef) return
+    const options = {
+      quality: 1,
+      base64: true,
+      exif: false
+    };
+    await cameraRef.current.takePicureAsync(options);
+  }
+
   PostPage = () => {
     return(
       <View style={styles.container}>
-        <Text>This is the new post page</Text>
+       <Camera style={styles.camera} type={type} ref={cameraRef}>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
+            <Text style={styles.textStyle}>Flip Camera</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={takePic}>
+            <Text style={styles.textStyle}>Take Picture</Text>
+          </TouchableOpacity>
+        </View>
+      </Camera>
       </View>
     );
   }
@@ -87,7 +134,7 @@ export default function App() {
       <Tab.Screen name="Post" component={PostPage}></Tab.Screen>
       <Tab.Screen name="Profile" component={Profile}></Tab.Screen>
     </Tab.Navigator>
-    )
+    );
   }
 
 
@@ -106,7 +153,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FFFFFF',
-    alignItems: 'center',
     justifyContent: 'center',
   },
 
@@ -117,15 +163,10 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    alignItems: "center",
-    marginTop:10,
-    paddingTop:15,
-    paddingBottom:15,
-    marginLeft:30,
-    marginRight:30,
-    borderRadius:10,
-    borderWidth: 1,
-    backgroundColor: "#009966",
+    flex: 1,
+    alignSelf: 'flex-end',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
 
   listbutton: {
@@ -183,7 +224,18 @@ const styles = StyleSheet.create({
     marginLeft:20,
     marginRight:20,
     textAlign: "center"
-  }
-
+  },
+  camera: {
+    flex: 1,
+    margin: 50,
+    marginLeft: 50,
+    marginRight: 50,
+  },
+  buttonContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    backgroundColor: 'transparent',
+    margin: 64,
+  },
 
 });
