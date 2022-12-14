@@ -31,7 +31,7 @@ export default function App() {
   const [type, setType] = useState(CameraType.back);
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const [userPhoto, updatePhoto] = useState('');
-  const cameraRef = useRef();
+  const cameraRef = useRef(null );
 
   function toggleCameraType() {
     setType(current => (current === CameraType.back ? CameraType.front : CameraType.back));
@@ -108,8 +108,6 @@ export default function App() {
   }
   
   FriendsPage = () => {
-  
-
     return(
       <View style={styles.container}>
           <FlatList
@@ -131,14 +129,18 @@ export default function App() {
   }
 
   takePic = async () => {
-    
     const options = {
       quality: 1,
       base64: true,
       exif: false
     };
-    const newPhoto = cameraRef.current.takePicureAsync(options);
-    updatePhoto(newPhoto)
+    try {
+      const newPhoto = cameraRef.current.takePicureAsync(options);
+      updatePhoto(newPhoto)
+    } catch (error) {
+      console.log(error)
+    }
+   
   }
 
   PostPage = () => {
