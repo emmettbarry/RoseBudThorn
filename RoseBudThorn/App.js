@@ -10,7 +10,8 @@ import {
   TextInput,
   Modal,
   TouchableHighlight,
-  Button
+  Button,
+  Image
 } from "react-native";
 import { NavigationContainer } from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -51,24 +52,35 @@ export default function App() {
 
   Login = ({navigation}) => {
     return(
-      <View style={styles.container}>
-        <Text>Welcome to Rose Bud Thorn{'\n\n'}</Text>
+      <View style={{borderWidth:3, justifyContent:"center"}}>
+        <Text style={{marginLeft:85, fontSize:20}}>Welcome to Rose Bud Thorn{'\n\n'}</Text>
 
-        <Text>Enter your Username</Text>
+        <Text style={{marginLeft:125}}>Enter your Username</Text>
         <TextInput
-          style={{height:40, borderWidth:1, length: 50, alignContent: "center"}}
+          style={{width: 200,
+            height: 40,
+            borderColor: 'gray',
+            borderWidth: 1,
+            marginBottom: 20,
+            marginLeft:100}}
           placeholder={'Enter Username'}
           onChangeText={text => setUsername(text)}
         />
-        <Text>Enter Your Password</Text>
+        <Text style={{marginLeft:125}}>Enter Your Password</Text>
         <TextInput
-          style={{height:40, borderWidth:1, length: 50, alignContent: "center"}}
+          style={{width: 200,
+            height: 40,
+            borderColor: 'gray',
+            borderWidth: 1,
+            marginBottom: 20,
+            marginLeft:100
+          }}
           placeholder={'Enter Password'}
           onChangeText={text => setPassword(text)}
         />
 
-        <TouchableOpacity style={styles.button} onPress={() => {navigation.navigate('RoseBudThorn')}}>
-          <Text>Login</Text>
+        <TouchableOpacity  onPress={() => {navigation.navigate('RoseBudThorn')}}>
+          <Text style={{marginLeft:175, marginTop:10,marginBottom:15, color:"blue"}} title="Login" >Login</Text>
         </TouchableOpacity>
       </View>
     );
@@ -77,8 +89,9 @@ export default function App() {
 
   Profile = () => {
     return(
-      <View style={styles.container}>
-        <Text>This is the Profile Page</Text>
+      <View >
+         <Text style={{marginLeft:115, marginTop:10, fontSize:30}}> Keegan Palmo</Text>
+         <Text style={{marginLeft:170, marginTop:5}}>10 Followers</Text>
       </View>
     );
   }
@@ -92,9 +105,24 @@ export default function App() {
   }
   
   FriendsPage = () => {
+  
+
     return(
       <View style={styles.container}>
-        <Text>This is the Friends Page</Text>
+          <FlatList
+            data={[
+            {key: 'Devin'},
+            {key: 'Dan'},
+            {key: 'Dominic'},
+            {key: 'Jackson'},
+            {key: 'James'},
+            {key: 'Joel'},
+            {key: 'John'},
+            {key: 'Jillian'},
+            {key: 'Jimmy'},
+            {key: 'Julie'}
+          ]}renderItem={({item}) => <Text style={{fontSize:25, marginTop:30, marginLeft:10}}>{item.key}</Text>}
+          />
       </View>
     );
   }
