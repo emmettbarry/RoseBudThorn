@@ -123,7 +123,6 @@ export default function App() {
   };
 
   HomePage = () => {
-    
     return (
       <View style={{ marginLeft: 30, marginTop: 10 }}>
         <Carousel>
