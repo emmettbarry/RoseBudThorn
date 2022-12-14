@@ -51,24 +51,35 @@ export default function App() {
 
   Login = ({navigation}) => {
     return(
-      <View style={styles.container}>
-        <Text>Welcome to Rose Bud Thorn{'\n\n'}</Text>
+      <View style={{borderWidth:3, justifyContent:"center"}}>
+        <Text style={{marginLeft:85, fontSize:20}}>Welcome to Rose Bud Thorn{'\n\n'}</Text>
 
-        <Text>Enter your Username</Text>
+        <Text style={{marginLeft:125}}>Enter your Username</Text>
         <TextInput
-          style={{height:40, borderWidth:1, length: 50, alignContent: "center"}}
+          style={{width: 200,
+            height: 40,
+            borderColor: 'gray',
+            borderWidth: 1,
+            marginBottom: 20,
+            marginLeft:100}}
           placeholder={'Enter Username'}
           onChangeText={text => setUsername(text)}
         />
-        <Text>Enter Your Password</Text>
+        <Text style={{marginLeft:125}}>Enter Your Password</Text>
         <TextInput
-          style={{height:40, borderWidth:1, length: 50, alignContent: "center"}}
+          style={{width: 200,
+            height: 40,
+            borderColor: 'gray',
+            borderWidth: 1,
+            marginBottom: 20,
+            marginLeft:100
+          }}
           placeholder={'Enter Password'}
           onChangeText={text => setPassword(text)}
         />
 
-        <TouchableOpacity style={styles.button} onPress={() => {navigation.navigate('RoseBudThorn')}}>
-          <Text>Login</Text>
+        <TouchableOpacity  onPress={() => {navigation.navigate('RoseBudThorn')}}>
+          <Text style={{marginLeft:175, marginTop:10,marginBottom:15, color:"blue"}} title="Login" >Login</Text>
         </TouchableOpacity>
       </View>
     );
@@ -93,7 +104,7 @@ export default function App() {
   
   FriendsPage = () => {
     return(
-      <View style={styles.container}>
+      <View>
         <Text>This is the Friends Page</Text>
       </View>
     );
