@@ -104,7 +104,7 @@ export default function App() {
   
   FriendsPage = () => {
     return(
-      <View>
+      <View style={styles.container}>
         <Text>This is the Friends Page</Text>
       </View>
     );
