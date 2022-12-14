@@ -20,6 +20,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Camera, CameraType } from "expo-camera";
 
 export default function App() {
+  
   const Stack = createNativeStackNavigator();
   const Tab = createBottomTabNavigator();
   const [username, setUsername] = useState("");
@@ -27,7 +28,8 @@ export default function App() {
 
   const [type, setType] = useState(CameraType.back);
   const [permission, requestPermission] = Camera.useCameraPermissions();
-  const cameraRef = useRef();
+  const [userPhoto, updatePhoto] = useState('');
+  const cameraRef = useRef(null );
 
   function toggleCameraType() {
     setType((current) =>
@@ -35,6 +37,7 @@ export default function App() {
     );
   }
 
+  
   if (!permission) {
     // Camera permissions are still loading
     return <View />;
