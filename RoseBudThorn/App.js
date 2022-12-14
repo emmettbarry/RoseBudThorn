@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   StyleSheet,
   View,
@@ -16,9 +16,12 @@ import { NavigationContainer } from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Camera, CameraType } from 'expo-camera';
-
-
+//import { Carousel } from 'react-native-reanimated-carousel';
+//import PropTypes from 'prop-types';
+import { Dimensions } from 'react-native';
+const { width } = Dimensions.get("window");
 export default function App() {
+  
   const Stack = createNativeStackNavigator();
   const Tab = createBottomTabNavigator();
   const [username, setUsername] = useState("");
@@ -26,12 +29,14 @@ export default function App() {
 
   const [type, setType] = useState(CameraType.back);
   const [permission, requestPermission] = Camera.useCameraPermissions();
+  const [userPhoto, updatePhoto] = useState('');
   const cameraRef = useRef();
 
   function toggleCameraType() {
     setType(current => (current === CameraType.back ? CameraType.front : CameraType.back));
   }
 
+  
   if (!permission) {
     // Camera permissions are still loading
     return <View />;
@@ -46,8 +51,6 @@ export default function App() {
       </View>
     );
   }
-
-
 
   Login = ({navigation}) => {
     return(
@@ -86,7 +89,7 @@ export default function App() {
   HomePage = () => {
     return(
       <View style={styles.container}>
-        <Text>This is the Home Page</Text>
+        
       </View>
     );
   }
@@ -100,13 +103,14 @@ export default function App() {
   }
 
   takePic = async () => {
-    if(!cameraRef) return
+    
     const options = {
       quality: 1,
       base64: true,
       exif: false
     };
-    await cameraRef.current.takePicureAsync(options);
+    const newPhoto = cameraRef.current.takePicureAsync(options);
+    updatePhoto(newPhoto)
   }
 
   PostPage = () => {
@@ -149,7 +153,6 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  
   container: {
     flex: 1,
     backgroundColor: '#FFFFFF',
@@ -238,4 +241,33 @@ const styles = StyleSheet.create({
     margin: 64,
   },
 
+  title: {
+    fontSize: 20,
+  },
+  item: {
+    margin: '100%',
+    //height: screenWidth - 20, //height will be 20 units less than screen width.
+  },
+    imageContainer: {
+    flex: 1,
+    borderRadius: 5,
+    backgroundColor: 'lightblue',
+    marginBottom: Platform.select({ ios: 0, android: 1 }), //handle rendering bug.
+  },
+  image: {
+    ...StyleSheet.absoluteFillObject,
+    resizeMode: 'contain',
+  },
+  dotContainer: {
+    backgroundColor: 'rgb(230,0,0)',
+  },
+  dotStyle: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    backgroundColor: 'black',
+  },
+  inactiveDotStyle: {
+    backgroundColor: 'rgb(255,230,230)',
+  },
 });
