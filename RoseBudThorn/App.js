@@ -10,7 +10,8 @@ import {
   TextInput,
   Modal,
   TouchableHighlight,
-  Button
+  Button,
+  Image
 } from "react-native";
 import { NavigationContainer } from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -88,8 +89,9 @@ export default function App() {
 
   Profile = () => {
     return(
-      <View style={styles.container}>
-        <Text>This is the Profile Page</Text>
+      <View >
+         <Text style={{marginLeft:115, marginTop:10, fontSize:30}}> Keegan Palmo</Text>
+         <Text style={{marginLeft:170, marginTop:5}}>10 Followers</Text>
       </View>
     );
   }
@@ -103,9 +105,24 @@ export default function App() {
   }
   
   FriendsPage = () => {
+  
+
     return(
       <View style={styles.container}>
-        <Text>This is the Friends Page</Text>
+          <FlatList
+            data={[
+            {key: 'Devin'},
+            {key: 'Dan'},
+            {key: 'Dominic'},
+            {key: 'Jackson'},
+            {key: 'James'},
+            {key: 'Joel'},
+            {key: 'John'},
+            {key: 'Jillian'},
+            {key: 'Jimmy'},
+            {key: 'Julie'}
+          ]}renderItem={({item}) => <Text style={{fontSize:25, marginTop:30, marginLeft:10}}>{item.key}</Text>}
+          />
       </View>
     );
   }
