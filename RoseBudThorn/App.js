@@ -124,6 +124,7 @@ export default function App() {
 
   HomePage = () => {
     return (
+      <View>
       <View style={{ marginLeft: 30, marginTop: 10 }}>
         <Carousel>
           <View>
@@ -138,6 +139,21 @@ export default function App() {
           </View>
         </Carousel>
       </View>
+      <View style={{ marginLeft: 30, marginTop: 10 }}>
+      <Carousel>
+        <View>
+          <Text>Page 1</Text>
+        </View>
+
+        <View>
+          <Text>Page 2</Text>
+        </View>
+        <View>
+          <Text>Page 3</Text>
+        </View>
+      </Carousel>
+    </View>
+    </View>
     );
   };
 
