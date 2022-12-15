@@ -128,28 +128,28 @@ export default function App() {
       <View style={{ marginLeft: 30, marginTop: 10 }}>
         <Carousel>
           <View>
-            <Text>Page 1</Text>
+            <Text>Rose</Text>
           </View>
 
           <View>
-            <Text>Page 2</Text>
+            <Text>Bud</Text>
           </View>
           <View>
-            <Text>Page 3</Text>
+            <Text>Thorn</Text>
           </View>
         </Carousel>
       </View>
       <View style={{ marginLeft: 30, marginTop: 10 }}>
       <Carousel>
         <View>
-          <Text>Page 1</Text>
+          <Text>Rose</Text>
         </View>
 
         <View>
-          <Text>Page 2</Text>
+          <Text>Bud</Text>
         </View>
         <View>
-          <Text>Page 3</Text>
+          <Text>Thorn</Text>
         </View>
       </Carousel>
     </View>
